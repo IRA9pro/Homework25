@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="orange">#D88B02</color>
+    <color name="red">#FF3B3B</color>
+    <color name="gray">#535353</color>
+    <color name="light_gray">#CFCFCF</color>
+    <color name="dark_gray">#252525</color>
+    <color name="gray1">#A9A9A9</color>
+    <color name="yellow_pick">#FFF599</color>
+    <color name="purple_pick">#B69CFF</color>
+    <color name="pink_pick">#FD99FF</color>
+    <color name="red_pick">#FF9E9E</color>
+    <color name="green_pick">#91F48F</color>
+    <color name="blue_pick">#9EFFFF</color>
+</resources>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray"
+    tools:context=".ui.NoteFragment">
+
+    <FrameLayout
+        android:id="@+id/box1"
+        android:layout_width="0dp"
+        android:layout_height="22dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toStartOf="@id/btnReady"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="16dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:src="@drawable/img_back" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginStart="28dp"
+            android:text="@string/time"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/btnOptions"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="end"
+            android:src="@drawable/img_color_pick_unselected" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/btnReady"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:text="@string/ready"
+        android:textColor="@color/orange"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/box1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="57dp"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|top"
+            android:background="@null"
+            android:hint="@string/title"
+            android:textAlignment="textStart"
+            android:textColorHint="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|top"
+            android:layout_marginTop="12dp"
+            android:background="@null"
+            android:hint="@string/text"
+            android:textAlignment="textStart"
+            android:textColorHint="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/options"
+        android:layout_width="152dp"
+        android:layout_height="140dp"
+        android:backgroundTint="@color/gray"
+        android:visibility="gone"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintEnd_toEndOf="@id/box1"
+        app:layout_constraintTop_toBottomOf="@id/box1">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="top"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delete"
+                    android:textColor="@color/red"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/btnDelete"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="end"
+                    android:padding="3dp"
+                    android:src="@drawable/img_trash" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="38dp"
+                android:text="@string/change_color"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_gravity="bottom"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_gravity="top">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/pick_yellow"
+                        style="@style/ColorPick"
+                        android:backgroundTint="@color/yellow_pick" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/pick_purple"
+                        style="@style/ColorPick"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="@color/purple_pick" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/pick_pink"
+                        style="@style/ColorPick"
+                        android:backgroundTint="@color/pink_pick" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_gravity="bottom">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/pick_red"
+                        style="@style/ColorPick"
+                        android:backgroundTint="@color/red_pick" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/pick_green"
+                        style="@style/ColorPick"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="@color/green_pick" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/pick_blue"
+                        style="@style/ColorPick"
+                        android:backgroundTint="@color/blue_pick" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
