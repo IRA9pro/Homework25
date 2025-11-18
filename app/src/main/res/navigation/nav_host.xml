@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.example.notes.ui.SplashScreenFragment"
+        android:name="com.example.notes.ui.splash_screen.SplashScreenFragment"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen">
         <action
@@ -29,15 +29,19 @@
         android:id="@+id/mainFragment"
         android:name="com.example.notes.ui.main.MainFragment"
         android:label="MainFragment">
+        <argument
+            android:name="note"
+            app:argType="com.example.notes.data.models.NoteModel"
+            app:nullable="true" />
         <action
             android:id="@+id/action_mainFragment_to_noteFragment"
             app:destination="@id/noteFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.example.notes.ui.NoteFragment"
+        android:name="com.example.notes.ui.note.NoteFragment"
         android:label="fragment_note"
-        tools:layout="@layout/fragment_note" >
+        tools:layout="@layout/fragment_note">
         <argument
             android:name="note"
             app:argType="com.example.notes.data.models.NoteModel"

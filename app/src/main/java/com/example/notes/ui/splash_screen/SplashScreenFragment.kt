@@ -1,4 +1,4 @@
-package com.example.notes.ui
+package com.example.notes.ui.splash_screen
 
 import android.os.Bundle
 import android.os.Handler

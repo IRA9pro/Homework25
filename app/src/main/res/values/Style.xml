@@ -14,7 +14,7 @@
         <item name="strokeColor">@color/orange</item>
         <item name="strokeWidth">0dp</item>
         <item name="cardCornerRadius">4dp</item>
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_width">52dp</item>
+        <item name="android:layout_height">38dp</item>
     </style>
 </resources>

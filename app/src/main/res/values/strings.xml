@@ -16,4 +16,6 @@
     <string name="ready">Ready</string>
     <string name="change_color">Change color</string>
     <string name="delete">Delete</string>
+    <string name="delete_note">Delete note?</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -3,13 +3,22 @@ package com.example.notes.ui.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navArgument
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
 import com.example.notes.data.models.NoteColor
 import com.example.notes.data.models.NoteModel
 import com.example.notes.databinding.ItemNoteBinding
+import com.example.notes.ui.App
+import org.w3c.dom.Text
 
-class NoteAdapter(val noteList: List<NoteModel>, val onModelClick: (NoteModel) -> Unit) :
+class NoteAdapter(
+    var noteList: List<NoteModel>,
+    val onModelClick: (NoteModel) -> Unit,
+    val onLongModelClick: (NoteModel) -> Unit
+) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -41,8 +50,7 @@ class NoteAdapter(val noteList: List<NoteModel>, val onModelClick: (NoteModel) -
                 tvText.text = noteModel.text
                 tvTime.text = noteModel.time
 
-                var pickedColor = R.color.yellow_pick
-                pickedColor = when (noteModel.color) {
+                val pickedColor = when (noteModel.color) {
                     NoteColor.YELLOW -> R.color.yellow_pick
                     NoteColor.PURPLE -> R.color.purple_pick
                     NoteColor.PINK -> R.color.pink_pick
@@ -55,6 +63,10 @@ class NoteAdapter(val noteList: List<NoteModel>, val onModelClick: (NoteModel) -
             }
 
             itemView.setOnClickListener { onModelClick(noteModel) }
+            itemView.setOnLongClickListener {
+                onLongModelClick(noteModel)
+                true
+            }
         }
     }
 }
