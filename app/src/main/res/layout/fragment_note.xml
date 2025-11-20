@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_gray"
-    tools:context=".ui.NoteFragment">
+    tools:context=".ui.note.NoteFragment">
 
     <FrameLayout
         android:id="@+id/box1"
         android:layout_width="0dp"
-        android:layout_height="22dp"
+        android:layout_height="25dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toStartOf="@id/btnReady"
@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="16dp"
-            android:layout_height="match_parent"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="start"
             android:src="@drawable/img_back" />
 
@@ -29,15 +29,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:layout_marginStart="28dp"
+            android:layout_marginStart="50dp"
             android:text="@string/time"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/btnOptions"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="end"
             android:src="@drawable/img_color_pick_unselected" />
 
@@ -50,7 +50,8 @@
         android:layout_marginEnd="20dp"
         android:text="@string/ready"
         android:textColor="@color/orange"
-        android:textSize="15sp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/box1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/box1" />
 
@@ -58,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="70dp"
         android:orientation="vertical">
 
 
@@ -69,9 +70,10 @@
             android:layout_gravity="start|top"
             android:background="@null"
             android:hint="@string/title"
+            android:maxLines="1"
             android:textAlignment="textStart"
             android:textColorHint="@color/white"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <EditText
@@ -84,14 +86,13 @@
             android:hint="@string/text"
             android:textAlignment="textStart"
             android:textColorHint="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/options"
-        android:layout_width="152dp"
-        android:layout_height="140dp"
+        android:layout_width="200dp"
+        android:layout_height="180dp"
         android:backgroundTint="@color/gray"
         android:visibility="gone"
         app:cardCornerRadius="4dp"
@@ -104,23 +105,23 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:layout_gravity="top"
                 android:paddingHorizontal="12dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="4dp">
+                android:paddingTop="12dp"
+                android:paddingBottom="6dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/delete"
                     android:textColor="@color/red"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/btnDelete"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="end"
                     android:padding="3dp"
                     android:src="@drawable/img_trash" />
@@ -131,21 +132,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="38dp"
+                android:layout_marginTop="50dp"
                 android:text="@string/change_color"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="68dp"
+                android:layout_height="85dp"
                 android:layout_gravity="bottom"
                 android:layout_marginHorizontal="12dp"
                 android:layout_marginBottom="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="top">
 
                     <com.google.android.material.card.MaterialCardView
@@ -156,7 +157,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/pick_purple"
                         style="@style/ColorPick"
-                        android:layout_marginHorizontal="4dp"
+                        android:layout_marginHorizontal="8dp"
                         android:backgroundTint="@color/purple_pick" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -168,7 +169,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="bottom">
 
                     <com.google.android.material.card.MaterialCardView
@@ -179,7 +180,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/pick_green"
                         style="@style/ColorPick"
-                        android:layout_marginHorizontal="4dp"
+                        android:layout_marginHorizontal="8dp"
                         android:backgroundTint="@color/green_pick" />
 
                     <com.google.android.material.card.MaterialCardView

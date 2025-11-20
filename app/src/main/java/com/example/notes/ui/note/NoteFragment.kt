@@ -1,12 +1,9 @@
-package com.example.notes.ui
+package com.example.notes.ui.note
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,8 +11,8 @@ import com.example.notes.R
 import com.example.notes.data.models.NoteColor
 import com.example.notes.data.models.NoteModel
 import com.example.notes.databinding.FragmentNoteBinding
+import com.example.notes.ui.App
 import com.google.android.material.card.MaterialCardView
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -52,7 +49,7 @@ class NoteFragment : Fragment() {
                 pickedColor(pickedColor)
 
                 btnDelete.setOnClickListener {
-                    App.db.dao().deleteNote(navArgument.note!!)
+                    App.Companion.db.dao().deleteNote(navArgument.note!!)
                     findNavController().navigateUp()
                 }
             }
@@ -65,10 +62,10 @@ class NoteFragment : Fragment() {
                 val color = pickedColor
 
                 if (navArgument.note == null)
-                    App.db.dao()
+                    App.Companion.db.dao()
                         .saveNote(NoteModel(title = title, text = text, color = color, time = time))
                 else
-                    App.db.dao()
+                    App.Companion.db.dao()
                         .saveNote(
                             NoteModel(
                                 title = title,
@@ -93,8 +90,6 @@ class NoteFragment : Fragment() {
                 }
             }
 
-            options.setOnClickListener { }
-
             pickYellow.setOnClickListener {
                 onCLickPickColor(pickYellow); pickedColor = NoteColor.YELLOW
             }
@@ -113,18 +108,20 @@ class NoteFragment : Fragment() {
 
     fun onCLickPickColor(picker: MaterialCardView) {
         lastPicked.strokeWidth = 0
-        picker.strokeWidth = 2
+        picker.strokeWidth = 10
         lastPicked = picker
     }
 
     fun pickedColor(noteColor: NoteColor) {
         binding.apply {
-            if (noteColor == NoteColor.YELLOW) onCLickPickColor(pickYellow)
-            else if (noteColor == NoteColor.PURPLE) onCLickPickColor(pickPurple)
-            else if (noteColor == NoteColor.PINK) onCLickPickColor(pickPink)
-            else if (noteColor == NoteColor.RED) onCLickPickColor(pickRed)
-            else if (noteColor == NoteColor.GREEN) onCLickPickColor(pickGreen)
-            else if (noteColor == NoteColor.BLUE) onCLickPickColor(pickBlue)
+            when (noteColor) {
+                NoteColor.YELLOW -> onCLickPickColor(pickYellow)
+                NoteColor.PURPLE -> onCLickPickColor(pickPurple)
+                NoteColor.PINK -> onCLickPickColor(pickPink)
+                NoteColor.RED -> onCLickPickColor(pickRed)
+                NoteColor.GREEN -> onCLickPickColor(pickGreen)
+                NoteColor.BLUE -> onCLickPickColor(pickBlue)
+            }
         }
     }
 }

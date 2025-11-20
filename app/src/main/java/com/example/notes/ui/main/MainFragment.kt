@@ -1,7 +1,6 @@
 package com.example.notes.ui.main
 
 import android.os.Bundle
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = NoteAdapter(App.db.dao().getAllNotes(), ::onModelClick)
+        adapter = NoteAdapter(App.db.dao().getAllNotes(), ::onModelClick, ::onLongModelClick)
         binding.rvNotesList.adapter = adapter
 
         binding.apply {
@@ -57,5 +56,12 @@ class MainFragment : Fragment() {
     private fun onModelClick(noteModel: NoteModel) {
         val navigate = MainFragmentDirections.actionMainFragmentToNoteFragment(noteModel)
         findNavController().navigate(navigate)
+    }
+
+    private fun onLongModelClick(noteModel: NoteModel) {
+        App.db.dao().deleteNote(noteModel)
+        adapter = NoteAdapter(App.db.dao().getAllNotes(), ::onModelClick, ::onLongModelClick)
+        binding.rvNotesList.adapter = adapter
+//        adapter.notifyItemRemoved(noteModel.id!! - 1)
     }
 }
