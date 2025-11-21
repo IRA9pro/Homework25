@@ -18,4 +18,10 @@
     <string name="delete">Delete</string>
     <string name="delete_note">Delete note?</string>
     <string name="cancel">Cancel</string>
+    <string name="folders">Folders</string>
+    <string name="authorization">Authorization</string>
+    <string name="sing_in_with_google">Sing in with Google</string>
+    <string name="new_folder">New folder</string>
+    <string name="save">Save</string>
+    <string name="type_folder_name">Type folder name</string>
 </resources>

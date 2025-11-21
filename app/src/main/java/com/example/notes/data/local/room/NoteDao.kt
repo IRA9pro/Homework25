@@ -18,4 +18,7 @@ interface NoteDao {
 
     @Delete
     fun deleteNote(noteModel: NoteModel)
+
+    @Query("SELECT * FROM note_list WHERE title LIKE :searchTitle || '%' ORDER BY id DESC")
+    fun search(searchTitle: String): List<NoteModel>
 }

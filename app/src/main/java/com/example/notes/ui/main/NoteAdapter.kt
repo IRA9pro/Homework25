@@ -11,7 +11,7 @@ import com.example.notes.R
 import com.example.notes.data.models.NoteColor
 import com.example.notes.data.models.NoteModel
 import com.example.notes.databinding.ItemNoteBinding
-import com.example.notes.ui.App
+import com.example.notes.App
 import org.w3c.dom.Text
 
 class NoteAdapter(

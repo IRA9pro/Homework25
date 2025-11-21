@@ -8,6 +8,8 @@
     <color name="light_gray">#CFCFCF</color>
     <color name="dark_gray">#252525</color>
     <color name="gray1">#A9A9A9</color>
+    <color name="gray2">#5B5B5B</color>
+    <color name="gray3">#353535</color>
     <color name="yellow_pick">#FFF599</color>
     <color name="purple_pick">#B69CFF</color>
     <color name="pink_pick">#FD99FF</color>

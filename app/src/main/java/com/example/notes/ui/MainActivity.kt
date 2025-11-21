@@ -21,15 +21,18 @@ class MainActivity : AppCompatActivity() {
         }
         val pref = Pref(this)
 
-        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-        val navGraph = navHost.navController.navInflater.inflate(R.navigation.nav_host)
+        if (savedInstanceState == null) {
+            val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+            val navGraph = navHost.navController.navInflater.inflate(R.navigation.nav_host)
 
-        navGraph.setStartDestination(
-            if (pref.isIntroShown())
-                R.id.mainFragment
-            else R.id.introductionFragment
-        )
+            navGraph.setStartDestination(
+                if (pref.isIntroShown())
+                    R.id.mainFragment
+                else R.id.introductionFragment
+            )
 
-        navHost.navController.graph = navGraph
+            navHost.navController.graph = navGraph
+        }
+
     }
 }

@@ -37,27 +37,15 @@
 
     </FrameLayout>
 
-    <EditText
-        android:id="@+id/ed_search"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="66dp"
-        android:background="@drawable/bg_search_box"
-        android:drawableStart="@drawable/img_search"
-        android:drawablePadding="20dp"
-        android:hint="@string/search_notes"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/gray1" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNotesList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="118dp"
+        android:layout_marginTop="100dp"
+        android:clipToPadding="false"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_note" />
 
@@ -72,5 +60,20 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:padding="25dp" />
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="65dp"
+        android:background="@drawable/bg_search_box"
+        android:drawableStart="@drawable/img_search"
+        android:drawablePadding="20dp"
+        android:hint="@string/search_notes"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray1" />
 
 </FrameLayout>

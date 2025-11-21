@@ -1,9 +1,14 @@
 package com.example.notes.ui.note
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -11,18 +16,21 @@ import com.example.notes.R
 import com.example.notes.data.models.NoteColor
 import com.example.notes.data.models.NoteModel
 import com.example.notes.databinding.FragmentNoteBinding
-import com.example.notes.ui.App
+import com.example.notes.App
+import com.example.notes.ui.main.NoteAdapter
 import com.google.android.material.card.MaterialCardView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import androidx.core.graphics.drawable.toDrawable
 
 class NoteFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteBinding
     private val navArgument: NoteFragmentArgs by navArgs()
+    private var pickedColor = NoteColor.YELLOW
+
 
     companion object {
-        var pickedColor = NoteColor.YELLOW
         lateinit var lastPicked: MaterialCardView
         var isOptionsOpened = false
     }
@@ -38,6 +46,8 @@ class NoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        callBack()
+
         binding.apply {
             lastPicked = pickYellow
 
@@ -49,8 +59,21 @@ class NoteFragment : Fragment() {
                 pickedColor(pickedColor)
 
                 btnDelete.setOnClickListener {
-                    App.Companion.db.dao().deleteNote(navArgument.note!!)
-                    findNavController().navigateUp()
+                    val dialogView = layoutInflater.inflate(R.layout.item_delete, null)
+
+                    val dialog = AlertDialog.Builder(requireContext()).setView(dialogView).create()
+                    dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+                    dialog.show()
+
+                    dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
+                        App.db.dao().deleteNote(navArgument.note!!)
+                        findNavController().navigateUp()
+                        dialog.dismiss()
+                    }
+                    dialogView.findViewById<Button>(R.id.btnCancel)
+                        .setOnClickListener { dialog.dismiss() }
+
+                    optionsViewed(false)
                 }
             }
 
@@ -78,17 +101,7 @@ class NoteFragment : Fragment() {
                 findNavController().navigateUp()
             }
             btnBack.setOnClickListener { findNavController().navigateUp() }
-            btnOptions.setOnClickListener {
-                if (isOptionsOpened) {
-                    options.visibility = View.GONE
-                    btnOptions.setImageResource(R.drawable.img_color_pick_unselected)
-                    isOptionsOpened = false
-                } else {
-                    options.visibility = View.VISIBLE
-                    btnOptions.setImageResource(R.drawable.img_color_pick_selected)
-                    isOptionsOpened = true
-                }
-            }
+            btnOptions.setOnClickListener { optionsViewed(!isOptionsOpened) }
 
             pickYellow.setOnClickListener {
                 onCLickPickColor(pickYellow); pickedColor = NoteColor.YELLOW
@@ -104,12 +117,14 @@ class NoteFragment : Fragment() {
             pickBlue.setOnClickListener { onCLickPickColor(pickBlue); pickedColor = NoteColor.BLUE }
         }
 
+        optionsViewed(false)
     }
 
     fun onCLickPickColor(picker: MaterialCardView) {
         lastPicked.strokeWidth = 0
         picker.strokeWidth = 10
         lastPicked = picker
+        optionsViewed(false)
     }
 
     fun pickedColor(noteColor: NoteColor) {
@@ -123,5 +138,36 @@ class NoteFragment : Fragment() {
                 NoteColor.BLUE -> onCLickPickColor(pickBlue)
             }
         }
+    }
+
+    fun optionsViewed(visibility: Boolean) {
+        binding.apply {
+            if (visibility) {
+                options.visibility = View.VISIBLE
+                btnOptions.setImageResource(R.drawable.img_color_pick_selected)
+                isOptionsOpened = true
+            } else {
+                options.visibility = View.GONE
+                btnOptions.setImageResource(R.drawable.img_color_pick_unselected)
+                isOptionsOpened = false
+            }
+        }
+    }
+
+    fun callBack() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Handle custom behavior here (e.g., close a search bar,
+                // or check if a form has unsaved changes)
+
+                // If you still want to perform the default Up navigation after your custom logic:
+                if (!findNavController().navigateUp()) {
+                    // If navigateUp failed (e.g., at the start destination),
+                    // you can call the super method or finish the activity
+                    requireActivity().finish()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

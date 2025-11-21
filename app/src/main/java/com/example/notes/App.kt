@@ -1,4 +1,4 @@
-package com.example.notes.ui
+package com.example.notes
 
 import android.app.Application
 import androidx.room.Room
