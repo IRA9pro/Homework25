@@ -12,17 +12,8 @@
         tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/action_splashScreenFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/introductionFragment"
-        android:name="com.example.notes.ui.introduction.IntroductionFragment"
-        android:label="fragment_introduction"
-        tools:layout="@layout/fragment_introduction">
-        <action
-            android:id="@+id/action_introductionFragment_to_mainFragment"
             app:destination="@id/mainFragment"
-            app:popUpTo="@id/introductionFragment"
+            app:popUpTo="@id/splashScreenFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -47,4 +38,23 @@
             app:argType="com.example.notes.data.models.NoteModel"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/folderFragment"
+        android:name="com.example.notes.ui.folder.FolderFragment"
+        android:label="fragment_folder"
+        tools:layout="@layout/fragment_folder" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.notes.ui.sign_in.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_introductionFragment"
+            app:destination="@id/introductionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/introductionFragment"
+        android:name="com.example.notes.ui.introduction.IntroductionFragment"
+        android:label="fragment_introduction"
+        tools:layout="@layout/fragment_introduction" />
 </navigation>

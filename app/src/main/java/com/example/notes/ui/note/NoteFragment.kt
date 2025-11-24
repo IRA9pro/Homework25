@@ -1,7 +1,6 @@
 package com.example.notes.ui.note
 
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,11 +16,11 @@ import com.example.notes.data.models.NoteColor
 import com.example.notes.data.models.NoteModel
 import com.example.notes.databinding.FragmentNoteBinding
 import com.example.notes.App
-import com.example.notes.ui.main.NoteAdapter
 import com.google.android.material.card.MaterialCardView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import androidx.core.graphics.drawable.toDrawable
+import com.example.notes.ui.dialogDelete
 
 class NoteFragment : Fragment() {
 
@@ -59,19 +58,10 @@ class NoteFragment : Fragment() {
                 pickedColor(pickedColor)
 
                 btnDelete.setOnClickListener {
-                    val dialogView = layoutInflater.inflate(R.layout.item_delete, null)
-
-                    val dialog = AlertDialog.Builder(requireContext()).setView(dialogView).create()
-                    dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-                    dialog.show()
-
-                    dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
+                    dialogDelete {
                         App.db.dao().deleteNote(navArgument.note!!)
                         findNavController().navigateUp()
-                        dialog.dismiss()
                     }
-                    dialogView.findViewById<Button>(R.id.btnCancel)
-                        .setOnClickListener { dialog.dismiss() }
 
                     optionsViewed(false)
                 }

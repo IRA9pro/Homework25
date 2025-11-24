@@ -24,4 +24,6 @@
     <string name="new_folder">New folder</string>
     <string name="save">Save</string>
     <string name="type_folder_name">Type folder name</string>
+    <string name="default_web_client_id">603780116262-9605cosa0ibetmj4ngprmb9qmavlc77p.apps.googleusercontent.com</string>
+    <string name="log_out">Log out</string>
 </resources>

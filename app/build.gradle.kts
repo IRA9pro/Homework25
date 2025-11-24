@@ -3,7 +3,10 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
 }
+
+
 
 android {
     namespace = "com.example.notes"
@@ -47,13 +50,21 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+
     //NavHost
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+
+    //Glide
+    implementation(libs.glide)
 
     //Lottie
     implementation(libs.lottie)
@@ -64,4 +75,9 @@ dependencies {
     //Room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
+
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+    implementation(libs.firebase.analytics)
+    implementation(libs.play.services.auth)
 }

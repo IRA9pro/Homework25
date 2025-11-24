@@ -11,5 +11,9 @@ class Pref(context: Context) {
         pref.edit { putBoolean("isIntroShown", true) }
     }
 
+    fun resetIntro() {
+        pref.edit { putBoolean("isIntroShown", false) }
+    }
+
     fun isIntroShown(): Boolean = pref.getBoolean("isIntroShown", false)
 }

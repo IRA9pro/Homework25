@@ -57,7 +57,7 @@ class IntroductionFragment : Fragment() {
 
     private fun onClickStart() {
         pref.setIntroShown()
-        findNavController().navigate(R.id.action_introductionFragment_to_mainFragment)
+        findNavController().navigate(R.id.mainFragment)
     }
 
     private fun onClickStop(position: Int) {

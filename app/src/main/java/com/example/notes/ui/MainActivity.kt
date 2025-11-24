@@ -19,20 +19,20 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val pref = Pref(this)
-
-        if (savedInstanceState == null) {
-            val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-            val navGraph = navHost.navController.navInflater.inflate(R.navigation.nav_host)
-
-            navGraph.setStartDestination(
-                if (pref.isIntroShown())
-                    R.id.mainFragment
-                else R.id.introductionFragment
-            )
-
-            navHost.navController.graph = navGraph
-        }
+//        val pref = Pref(this)
+//
+//        if (savedInstanceState == null) {
+//            val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+//            val navGraph = navHost.navController.navInflater.inflate(R.navigation.nav_host)
+//
+//            navGraph.setStartDestination(
+//                if (pref.isIntroShown())
+//                    R.id.signInFragment
+//                else R.id.introductionFragment
+//            )
+//
+//            navHost.navController.graph = navGraph
+//        }
 
     }
 }

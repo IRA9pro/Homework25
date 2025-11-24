@@ -1,16 +1,13 @@
 package com.example.notes.ui.main
 
-import android.content.DialogInterface
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.activity.OnBackPressedCallback
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -21,12 +18,21 @@ import com.example.notes.data.models.NoteModel
 import com.example.notes.databinding.FragmentMainBinding
 import com.example.notes.App
 import androidx.core.graphics.drawable.toDrawable
+import com.bumptech.glide.Glide
+import com.example.notes.ui.dialogDelete
+import com.example.notes.ui.listener
+import com.example.notes.ui.resetUX
+import com.example.notes.ui.userUX
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class MainFragment : Fragment() {
 
     lateinit var binding: FragmentMainBinding
     private lateinit var adapter: NoteAdapter
     private var isRVViewGrid = false
+    private val auth = Firebase.auth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,56 +45,96 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = NoteAdapter(App.db.dao().getAllNotes(), ::onModelClick, ::onLongModelClick)
-        binding.rvNotesList.adapter = adapter
+        userUX()
+
+        userView()
+
+        initializeRV()
 
         binding.apply {
-            btnAddNote.setOnClickListener {
-                val navigate = MainFragmentDirections.actionMainFragmentToNoteFragment(null)
-                findNavController().navigate(navigate)
-            }
+            buttonsListener()
+            search()
+        }
+    }
 
-            btnShape.setOnClickListener {
-                if (isRVViewGrid) {
-                    rvNotesList.layoutManager = LinearLayoutManager(requireContext())
-                    btnShape.setImageResource(R.drawable.img_view_grid)
-                    isRVViewGrid = false
-                } else {
-                    rvNotesList.layoutManager = GridLayoutManager(requireContext(), 2)
-                    btnShape.setImageResource(R.drawable.img_view_list)
-                    isRVViewGrid = true
-                }
-            }
+    private fun initializeRV() {
+        adapter = NoteAdapter(App.db.dao().getAllNotes(), ::onModelClick, ::onLongModelClick)
+        binding.rvNotesList.adapter = adapter
+    }
 
-//            btnMenu.setOnClickListener {
-//                val navigate = MainFragmentDirections.action_mainFragment_to_folderFragment()
-//                findNavController().navigate(navigate)
-//            }
+    private fun userView() {
+        val user = auth.currentUser
 
-            etSearch.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    p0: CharSequence?,
-                    p1: Int,
-                    p2: Int,
-                    p3: Int
-                ) {
-                }
+        binding.tvUserName.text = user?.displayName
+        Glide.with(binding.root).load(user?.photoUrl).into(binding.tvUserPhoto)
 
-                override fun onTextChanged(
-                    p0: CharSequence?,
-                    p1: Int,
-                    p2: Int,
-                    p3: Int
-                ) {
-                    val listNotes = App.db.dao().search(binding.etSearch.text.toString())
-                    adapter = NoteAdapter(listNotes, ::onModelClick, ::onLongModelClick)
-                    binding.rvNotesList.adapter = adapter
-                }
+        userTap()
+    }
 
-                override fun afterTextChanged(p0: Editable?) {}
-            })
+    private fun userTap() {
+        binding.tvUser.setOnLongClickListener {
+            dialogUser()
+            true
+        }
+    }
 
+    private fun dialogUser() {
+        val user = auth.currentUser!!
+        val dialogView = layoutInflater.inflate(R.layout.dialog_user, null)
 
+        val dialog = AlertDialog.Builder(requireContext()).setView(dialogView).create()
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+        dialog.show()
+
+        dialogView.findViewById<TextView>(R.id.tv_userEmail).text = user.email
+        dialogView.findViewById<TextView>(R.id.tv_userName).text = user.displayName
+        Glide.with(binding.root).load(user.photoUrl)
+            .into(dialogView.findViewById(R.id.tv_userPhoto))
+
+        dialogView.findViewById<TextView>(R.id.btn_logOut).setOnClickListener {
+            resetUX()
+            dialog.dismiss()
+            true
+        }
+        dialogView.findViewById<ImageView>(R.id.btn_close).setOnClickListener { dialog.dismiss() }
+    }
+
+    private fun FragmentMainBinding.search() {
+        etSearch.listener({
+            val listNotes = App.db.dao().search(binding.etSearch.text.toString())
+            adapter = NoteAdapter(listNotes, ::onModelClick, ::onLongModelClick)
+            binding.rvNotesList.adapter = adapter
+        })
+    }
+
+    private fun FragmentMainBinding.buttonsListener() {
+        btnAddNote.setOnClickListener {
+            val navigate = MainFragmentDirections.actionMainFragmentToNoteFragment(null)
+            findNavController().navigate(navigate)
+        }
+
+        btnShape.setOnClickListener {
+            changeManager()
+        }
+
+        btnMenu.setOnClickListener {
+            findNavController().navigate(R.id.folderFragment)
+        }
+    }
+
+    private fun FragmentMainBinding.changeManager() {
+        if (isRVViewGrid) {
+            rvNotesList.layoutManager = LinearLayoutManager(requireContext())
+            btnShape.setImageResource(R.drawable.img_view_grid)
+            isRVViewGrid = false
+        } else {
+            rvNotesList.layoutManager = GridLayoutManager(requireContext(), 2)
+            btnShape.setImageResource(R.drawable.img_view_list)
+            isRVViewGrid = true
         }
     }
 
@@ -98,19 +144,10 @@ class MainFragment : Fragment() {
     }
 
     private fun onLongModelClick(noteModel: NoteModel) {
-
-        val dialogView = layoutInflater.inflate(R.layout.item_delete, null)
-
-        val dialog = AlertDialog.Builder(requireContext()).setView(dialogView).create()
-        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-        dialog.show()
-
-        dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
+        dialogDelete {
             App.db.dao().deleteNote(noteModel)
             adapter = NoteAdapter(App.db.dao().getAllNotes(), ::onModelClick, ::onLongModelClick)
             binding.rvNotesList.adapter = adapter
-            dialog.dismiss()
         }
-        dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener { dialog.dismiss() }
     }
 }

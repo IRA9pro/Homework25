@@ -29,7 +29,7 @@ class SplashScreenFragment : Fragment() {
         val navController = findNavController()
 
         Handler(Looper.getMainLooper()).postDelayed(
-            { navController.navigate(R.id.action_introductionFragment_to_mainFragment) },
+            { navController.navigate(R.id.action_splashScreenFragment_to_mainFragment) },
             1000
         )
     }
