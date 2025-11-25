@@ -78,31 +78,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun dialogUser() {
-        val user = auth.currentUser!!
-        val dialogView = layoutInflater.inflate(R.layout.dialog_user, null)
-
-        val dialog = AlertDialog.Builder(requireContext()).setView(dialogView).create()
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-        dialog.show()
-
-        dialogView.findViewById<TextView>(R.id.tv_userEmail).text = user.email
-        dialogView.findViewById<TextView>(R.id.tv_userName).text = user.displayName
-        Glide.with(binding.root).load(user.photoUrl)
-            .into(dialogView.findViewById(R.id.tv_userPhoto))
-
-        dialogView.findViewById<TextView>(R.id.btn_logOut).setOnClickListener {
-            resetUX()
-            dialog.dismiss()
-            true
-        }
-        dialogView.findViewById<ImageView>(R.id.btn_close).setOnClickListener { dialog.dismiss() }
-    }
-
     private fun FragmentMainBinding.search() {
         etSearch.listener({
             val listNotes = App.db.dao().search(binding.etSearch.text.toString())
@@ -149,5 +124,30 @@ class MainFragment : Fragment() {
             adapter = NoteAdapter(App.db.dao().getAllNotes(), ::onModelClick, ::onLongModelClick)
             binding.rvNotesList.adapter = adapter
         }
+    }
+
+    private fun dialogUser() {
+        val user = auth.currentUser!!
+        val dialogView = layoutInflater.inflate(R.layout.dialog_user, null)
+
+        val dialog = AlertDialog.Builder(requireContext()).setView(dialogView).create()
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+        dialog.show()
+
+        dialogView.findViewById<TextView>(R.id.tv_userEmail).text = user.email
+        dialogView.findViewById<TextView>(R.id.tv_userName).text = user.displayName
+        Glide.with(binding.root).load(user.photoUrl)
+            .into(dialogView.findViewById(R.id.tv_userPhoto))
+
+        dialogView.findViewById<TextView>(R.id.btn_logOut).setOnClickListener {
+            resetUX()
+            dialog.dismiss()
+            true
+        }
+        dialogView.findViewById<ImageView>(R.id.btn_close).setOnClickListener { dialog.dismiss() }
     }
 }
